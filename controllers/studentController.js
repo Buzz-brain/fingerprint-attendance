@@ -1,19 +1,3 @@
-// Clear all registered students
-const clearAllStudents = async (req, res) => {
-  try {
-    await Student.deleteMany({});
-    res.status(200).json({
-      success: true,
-      message: "All students have been deleted."
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to delete students.",
-      error: error.message
-    });
-  }
-};
 const Student = require("../models/Student");
 const Attendance = require("../models/Attendance");
 
@@ -25,7 +9,7 @@ const registerStudent = async (req, res) => {
       fingerprint_id,
       name,
       department,
-      class: device_id,
+      device_id,
     } = req.body;
 
     // Check if fingerprint ID is already taken
@@ -225,6 +209,23 @@ const deleteStudent = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Server error while deactivating student",
+    });
+  }
+};
+
+// Clear all registered students
+const clearAllStudents = async (req, res) => {
+  try {
+    await Student.deleteMany({});
+    res.status(200).json({
+      success: true,
+      message: "All students have been deleted."
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete students.",
+      error: error.message
     });
   }
 };

@@ -16,7 +16,7 @@ router.post("/", registerStudent);
 router.delete("/clear", require("../controllers/studentController").clearAllStudents);
 
 // Get all students
-router.get("/", getStudents);
+router.get(["/", ""], getStudents);
 
 // Get student by fingerprint ID
 router.get("/:fingerprint_id", getStudentByFingerprintId);

@@ -52,6 +52,9 @@ app.use(morgan('combined'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static files from public directory
+app.use(express.static('public'));
+
 // Routes
 
 
@@ -139,7 +142,7 @@ app.listen(PORT, () => {
   console.log(`🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
   console.log(`📊 API Health: http://localhost:${PORT}/api/health`);
   console.log(`🎓 Attendance API: http://localhost:${PORT}/api/attendance`);
-  console.log(`👥 Students API: http://localhost:${PORT}/api/students`);
+  console.log(`👥 Students API: http://localhost:${PORT}/api/register`);
 });
 
 module.exports = app;

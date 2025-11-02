@@ -1,19 +1,3 @@
-// Clear all marked attendance
-const clearAllAttendance = async (req, res) => {
-  try {
-    await Attendance.deleteMany({});
-    res.status(200).json({
-      success: true,
-      message: "All attendance records have been deleted."
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to delete attendance records.",
-      error: error.message
-    });
-  }
-};
 const Attendance = require("../models/Attendance");
 const Student = require("../models/Student");
 
@@ -240,6 +224,23 @@ const getAttendanceStats = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Server error while fetching statistics",
+    });
+  }
+};
+
+// Clear all marked attendance
+const clearAllAttendance = async (req, res) => {
+  try {
+    await Attendance.deleteMany({});
+    res.status(200).json({
+      success: true,
+      message: "All attendance records have been deleted."
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete attendance records.",
+      error: error.message
     });
   }
 };

@@ -225,40 +225,54 @@ export default function Attendance() {
                   <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
-              {loading && <p>Loading...</p>}
-              {error && <p>{error}</p>}
-              {!loading && !error && attendance.length === 0 && (
-                <div className="flex flex-col items-center justify-center py-16 text-center text-muted-foreground">
-                  <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="mx-auto mb-4 text-accent">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6l4 2" />
-                    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" fill="none" />
-                  </svg>
-                  <h3 className="text-lg font-semibold mb-1">No Attendance Records</h3>
-                  <p className="max-w-md text-sm text-muted-foreground">There are currently no attendance records to display. Once students are marked present, their records will appear here.</p>
-                </div>
-              )}
-              {!loading && !error && attendance.length > 0 && (
-                <TableBody>
-                  {attendance.map((record) => (
-                    <TableRow key={record._id || record.id}>
-                      <TableCell className="font-medium">{record.fingerprint_id || record.studentId}</TableCell>
-                      <TableCell>{record.student_name || record.studentName}</TableCell>
-                      <TableCell>{record.department}</TableCell>
-                      <TableCell>{record.course}</TableCell>
-                      <TableCell>{record.period}</TableCell>
-                      <TableCell>{record.device_id || record.deviceId}</TableCell>
-                      <TableCell>{record.date ? new Date(record.date).toLocaleDateString() : ''}</TableCell>
-                      <TableCell>{record.timestamp ? new Date(record.timestamp).toLocaleString() : ''}</TableCell>
-                      <TableCell>{getStatusBadge(record.status)}</TableCell>
-                      <TableCell>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              )}
+              <TableBody>
+                {loading && (
+                  <TableRow>
+                    <TableCell colSpan={10} className="py-8 text-center text-muted-foreground">
+                      Loading...
+                    </TableCell>
+                  </TableRow>
+                )}
+                {error && (
+                  <TableRow>
+                    <TableCell colSpan={10} className="py-8 text-center text-destructive">
+                      {error}
+                    </TableCell>
+                  </TableRow>
+                )}
+                {!loading && !error && attendance.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={10} className="py-16 text-center">
+                      <div className="flex flex-col items-center justify-center">
+                        <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="mx-auto mb-4 text-accent">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6l4 2" />
+                          <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                        </svg>
+                        <h3 className="text-lg font-semibold mb-1">No Attendance Records</h3>
+                        <span className="max-w-md text-sm text-muted-foreground">There are currently no attendance records to display. Once students are marked present, their records will appear here.</span>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
+                {!loading && !error && attendance.length > 0 && attendance.map((record) => (
+                  <TableRow key={record._id || record.id}>
+                    <TableCell className="font-medium">{record.fingerprint_id || record.studentId}</TableCell>
+                    <TableCell>{record.student_name || record.studentName}</TableCell>
+                    <TableCell>{record.department}</TableCell>
+                    <TableCell>{record.course}</TableCell>
+                    <TableCell>{record.period}</TableCell>
+                    <TableCell>{record.device_id || record.deviceId}</TableCell>
+                    <TableCell>{record.date ? new Date(record.date).toLocaleDateString() : ''}</TableCell>
+                    <TableCell>{record.timestamp ? new Date(record.timestamp).toLocaleString() : ''}</TableCell>
+                    <TableCell>{getStatusBadge(record.status)}</TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
             </Table>
           </div>
         </CardContent>

@@ -9,10 +9,10 @@ const connectDB = require('./config/database');
 // Route imports
 const studentRoutes = require("./routes/students");
 const attendanceRouter = require("./routes/attendance");
-const eventsSSE = require("../routes/events");
-const devicesRouter = require("../routes/devices");
-const authRouter = require("../routes/auth");
-const { authMiddleware } = require("../middleware/auth");
+const eventsSSE = require("./routes/events");
+const devicesRouter = require("./routes/devices");
+const authRouter = require("./routes/auth");
+const { authMiddleware } = require("./middleware/auth");
 
 // Initialize Express app
 const app = express();

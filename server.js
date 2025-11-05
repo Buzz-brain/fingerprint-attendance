@@ -13,6 +13,7 @@ const eventsSSE = require("./routes/events");
 const devicesRouter = require("./routes/devices");
 const authRouter = require("./routes/auth");
 const { authMiddleware } = require("./middleware/auth");
+const { markAttendance } = require("./controllers/attendanceController");
 
 // Initialize Express app
 const app = express();
@@ -74,7 +75,6 @@ app.use('/api', authRouter);
 
 // --- Attendance endpoints ---
 // Allow ESP32 to POST attendance without auth
-const { markAttendance } = require('./controllers/attendanceController');
 app.post('/api/attendance', markAttendance);
 // Protect all other attendance routes (dashboard, stats, etc.)
 app.use('/api/attendance', authMiddleware, attendanceRouter);

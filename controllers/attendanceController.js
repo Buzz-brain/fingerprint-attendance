@@ -148,6 +148,11 @@ const getAttendance = async (req, res) => {
 
     const total = await Attendance.countDocuments(filter);
 
+    // Get all students for mapping fingerprint_id to student_id
+    const students = await Student.find({}, { fingerprint_id: 1, student_id: 1 }).lean();
+    const studentIdMap = {};
+    students.forEach(s => { studentIdMap[s.fingerprint_id] = s.student_id; });
+
     // Calculate attendanceRate for each student in the attendance list
     // Get total possible days (distinct dates in Attendance collection)
     const totalDays = await Attendance.distinct('timestamp');
@@ -161,6 +166,7 @@ const getAttendance = async (req, res) => {
       return {
         ...record._doc,
         attendanceRate: Number(rate),
+        student_id: studentIdMap[record.fingerprint_id] || null,
       };
     });
     res.json({

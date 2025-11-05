@@ -11,6 +11,8 @@ const studentRoutes = require("./routes/students");
 const attendanceRouter = require("./routes/attendance");
 const eventsSSE = require("./routes/events");
 const devicesRouter = require("./routes/devices");
+const authRouter = require("./routes/auth");
+const { authMiddleware } = require("./middleware/auth");
 
 // Initialize Express app
 const app = express();
@@ -59,17 +61,18 @@ app.use(express.static('public'));
 
 // Routes
 
-// SSE events stream
-app.use('/api/events', eventsSSE.router);
 
-// Device status endpoint
-app.use('/api/devices', devicesRouter);
+// --- Unprotected endpoints (ESP32, SSE, device status, registration) ---
+app.use('/api/events', eventsSSE.router); // SSE
+app.use('/api/devices', devicesRouter);   // Device status
+app.use('/api/register', studentRoutes);  // Registration (if used by ESP32)
 
-// Add /api/attendance route for attendance
-app.use('/api/attendance', attendanceRouter);
+// Auth routes (login)
+app.use('/api', authRouter);
 
-// Use students.js router for student registration
-app.use('/api/register', studentRoutes);
+// --- Protected dashboard API endpoints ---
+app.use('/api/attendance', authMiddleware, attendanceRouter); // Attendance dashboard
+// Add more protected routes here as needed
 
 // Health check route
 app.get('/api/health', (req, res) => {

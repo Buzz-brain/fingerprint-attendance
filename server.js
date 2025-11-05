@@ -71,9 +71,11 @@ app.use('/api/register', studentRoutes);  // Registration (if used by ESP32)
 app.use('/api', authRouter);
 
 
+
 // --- Attendance endpoints ---
 // Allow ESP32 to POST attendance without auth
-app.post('/api/attendance', attendanceRouter);
+const { markAttendance } = require('./controllers/attendanceController');
+app.post('/api/attendance', markAttendance);
 // Protect all other attendance routes (dashboard, stats, etc.)
 app.use('/api/attendance', authMiddleware, attendanceRouter);
 // Add more protected routes here as needed

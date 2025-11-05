@@ -6,14 +6,14 @@ const {
   getStudentByFingerprintId,
   updateStudent,
   deleteStudent,
-} = require("../controllers/studentController");
+} = require("../../controllers/studentController");
 // const { validateStudentRegistration } = require("../middleware/validation");
 
 // Register new student (from ESP32)
 router.post("/", registerStudent);
 
 // Clear all registered students
-router.delete("/clear", require("../controllers/studentController").clearAllStudents);
+router.delete("/clear", require("../../controllers/studentController").clearAllStudents);
 
 // Get all students
 router.get(["/", ""], getStudents);

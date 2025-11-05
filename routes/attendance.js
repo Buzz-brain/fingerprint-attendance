@@ -4,14 +4,14 @@ const {
   markAttendance,
   getAttendance,
   getAttendanceStats,
-} = require("../controllers/attendanceController");
+} = require("../../controllers/attendanceController");
 // const { validateAttendance } = require("../middleware/validation");
 
 // Mark attendance (from ESP32)
 router.post("/", markAttendance);
 
 // Clear all marked attendance
-router.delete("/clear", require("../controllers/attendanceController").clearAllAttendance);
+router.delete("/clear", require("../../controllers/attendanceController").clearAllAttendance);
 
 // Get attendance records
 router.get("/", getAttendance);
